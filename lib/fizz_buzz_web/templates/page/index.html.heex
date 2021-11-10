@@ -1,41 +1,44 @@
-<section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>Peace of mind from prototype to production</p>
+<section class="row">
+  <form method="get">
+    <input type="hidden" name="page" id="page_input" value=""/>
+    <input type="text" name="page_size" id="page_size_input" value=""/>
+    <input type="submit" value="Refresh"/>
+  </form>
 </section>
 
 <section class="row">
-  <article class="column">
-    <h2>Resources</h2>
-    <ul>
-      <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.6/CHANGELOG.md">v1.6 Changelog</a>
-      </li>
-    </ul>
-  </article>
-  <article class="column">
-    <h2>Help</h2>
-    <ul>
-      <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
-      </li>
-      <li>
-        <a href="https://web.libera.chat/#elixir">#elixir on Libera Chat (IRC)</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-      <li>
-        <a href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a>
-      </li>
-      <li>
-        <a href="https://discord.gg/elixir">Elixir on Discord</a>
-      </li>
-    </ul>
-  </article>
+  <a href="#" id="previous_page_link" style="display:none;">Previous page</a>
+  &nbsp;|&nbsp;
+  <a href="#" id="next_page_link" style="display:none;">Next page</a>
 </section>
+
+<section class="row">
+  <ul id="fizzbuzz">
+  </ul>
+
+</section>
+
+<script>
+$( document ).ready(function() {
+  let queryParams = new URLSearchParams(window.location.search);
+  let page = queryParams.get("page") || 1;
+  let page_size = queryParams.get("page_size") || 100;
+  $("#page_input").val(page);
+  $("#page_size_input").val(page_size);
+  fetch(`/api/fizz-buzz?page=${page}&page_size=${page_size}`)
+    .then(result => result.json())
+    .then(result => {
+      if (result.next_page) {
+        $("#next_page_link")
+          .attr("href",result.next_page)
+          .show();
+      }
+      if (result.previous_page) {
+        $("#previous_page_link")
+          .attr("href",result.previous_page)
+          .show();
+      }
+      result.data.map(row => $("#fizzbuzz").append(`<li>${row.value} -> ${row.result}</li>`))
+    })
+});
+</script>

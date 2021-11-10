@@ -25,12 +25,12 @@ defmodule FizzBuzzWeb.Pagination do
     }
     |> Map.merge(
       unless(offset + limit > 100_000_000_000,
-        do: %{next_page: "?page=#{page + 1}&page_size=#{limit}"},
+        do: %{next_page: "?page=#{page + 2}&page_size=#{limit}"},
         else: %{}
       )
     )
     |> Map.merge(
-      unless(page < 2, do: %{previous_page: "?page=#{page - 1}&page_size=#{limit}"}, else: %{})
+      unless(page < 1, do: %{previous_page: "?page=#{page}&page_size=#{limit}"}, else: %{})
     )
   end
 end
