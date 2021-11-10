@@ -17,6 +17,7 @@ defmodule FizzBuzz do
     end
   end
 
+  @spec generate_fizz_buzz(integer(), integer()) :: [String.t()]
   def generate_fizz_buzz(from, to) when is_integer(from) and is_integer(to) do
     from..to
     |> Enum.map(&fizz_buzz/1)
