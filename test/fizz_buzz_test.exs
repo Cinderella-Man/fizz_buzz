@@ -16,4 +16,24 @@ defmodule FizzBuzzTest do
       assert FizzBuzz.fizz_buzz(number) == expected_result
     end)
   end
+
+  test "generate_fizz_buzz returns expected results" do
+    assert FizzBuzz.generate_fizz_buzz(1, 15) == [
+             "1",
+             "2",
+             "Fizz",
+             "4",
+             "Buzz",
+             "Fizz",
+             "7",
+             "8",
+             "Fizz",
+             "Buzz",
+             "11",
+             "Fizz",
+             "13",
+             "14",
+             "FizzBuzz"
+           ]
+  end
 end
