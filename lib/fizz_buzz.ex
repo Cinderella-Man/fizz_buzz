@@ -29,4 +29,20 @@ defmodule FizzBuzz do
       {:ok, data}
     end
   end
+
+  @spec merge_favourite_rows([%{value: integer()}], [integer()]) :: [
+          %{value: integer(), favourite: boolean()}
+        ]
+  def merge_favourite_rows(data, favourite_numbers) do
+    data
+    |> Enum.map(&merge_favourite_row(&1, favourite_numbers))
+  end
+
+  @spec merge_favourite_row(%{value: integer()}, [integer()]) :: %{
+          value: integer(),
+          favourite: boolean()
+        }
+  def merge_favourite_row(%{value: number} = row, favourite_numbers) do
+    Map.put(row, :favourite, Enum.member?(favourite_numbers, number))
+  end
 end

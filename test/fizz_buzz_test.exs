@@ -38,4 +38,38 @@ defmodule FizzBuzzTest do
                 %{result: "FizzBuzz", value: 15}
               ]}
   end
+
+  test "merge_favourite_rows merges rows" do
+    rows = [
+      %{value: 2, result: "2"},
+      %{value: 3, result: "Fizz"},
+      %{value: 5, result: "Buzz"}
+    ]
+
+    expected_result = [
+      %{value: 2, result: "2", favourite: false},
+      %{value: 3, result: "Fizz", favourite: true},
+      %{value: 5, result: "Buzz", favourite: false}
+    ]
+
+    assert FizzBuzz.merge_favourite_rows(rows, [3]) == expected_result
+  end
+
+  test "merge_favourite_row merges rows(favourite)" do
+    row = %{value: 3, result: "Fizz"}
+    expected_result = %{value: 3, result: "Fizz", favourite: true}
+    assert FizzBuzz.merge_favourite_row(row, [3]) == expected_result
+  end
+
+  test "merge_favourite_row merges rows(not favourite)" do
+    row = %{value: 3, result: "Fizz"}
+    expected_result = %{value: 3, result: "Fizz", favourite: false}
+    assert FizzBuzz.merge_favourite_row(row, [4]) == expected_result
+  end
+
+  test "merge_favourite_row merges rows(empty favourite)" do
+    row = %{value: 4, result: "4"}
+    expected_result = %{value: 4, result: "4", favourite: false}
+    assert FizzBuzz.merge_favourite_row(row, []) == expected_result
+  end
 end
