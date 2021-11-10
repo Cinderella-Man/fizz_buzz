@@ -17,9 +17,16 @@ defmodule FizzBuzz do
     end
   end
 
-  @spec generate_fizz_buzz(integer(), integer()) :: [String.t()]
+  @spec generate_fizz_buzz(integer(), integer()) :: {:ok, [String.t()]} | {:error, :out_of_range}
   def generate_fizz_buzz(from, to) when is_integer(from) and is_integer(to) do
-    from..to
-    |> Enum.map(&fizz_buzz/1)
+    if to > 100_000_000_000 do
+      {:error, :out_of_range}
+    else
+      data =
+        from..to
+        |> Enum.map(fn n -> %{value: n, result: fizz_buzz(n)} end)
+
+      {:ok, data}
+    end
   end
 end

@@ -1,23 +1,25 @@
 defmodule FizzBuzzWeb.PaginationTest do
   use ExUnit.Case
 
+  alias FizzBuzzWeb.Pagination
+
   test "Pagination correctly validates valid data" do
-    assert FizzBuzzWeb.Pagination.validate_params(%{"page" => "5", "page_size" => "250"}) ==
-             {:ok, %{page: 5, page_size: 250}}
+    assert Pagination.parse(%{"page" => "5", "page_size" => "250"}) ==
+             {:ok, %Pagination{offset: 1000, limit: 250}}
   end
 
   test "Pagination defaults to 1st page" do
-    assert FizzBuzzWeb.Pagination.validate_params(%{"page_size" => "250"}) ==
-             {:ok, %{page: 1, page_size: 250}}
+    assert Pagination.parse(%{"page_size" => "250"}) ==
+             {:ok, %Pagination{offset: 0, limit: 250}}
   end
 
   test "Pagination default to 100 items per page" do
-    assert FizzBuzzWeb.Pagination.validate_params(%{"page" => "3"}) ==
-             {:ok, %{page: 3, page_size: 100}}
+    assert Pagination.parse(%{"page" => "3"}) ==
+             {:ok, %Pagination{offset: 200, limit: 100}}
   end
 
   test "Pagination default to 1st page and 100 items per page" do
-    assert FizzBuzzWeb.Pagination.validate_params(%{}) ==
-             {:ok, %{page: 1, page_size: 100}}
+    assert Pagination.parse(%{}) ==
+             {:ok, %Pagination{offset: 0, limit: 100}}
   end
 end
