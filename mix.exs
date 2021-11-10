@@ -35,11 +35,13 @@ defmodule FizzBuzz.MixProject do
     [
       {:phoenix, "~> 1.6.2"},
       {:phoenix_ecto, "~> 4.4"},
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.16.0"},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.5"},
       {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
