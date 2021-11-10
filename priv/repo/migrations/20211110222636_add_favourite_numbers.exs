@@ -3,7 +3,6 @@ defmodule FizzBuzz.Repo.Migrations.AddFavouriteNumbers do
 
   def up do
     create table("favourite_numbers") do
-      add :number, :integer
     end
   end
 

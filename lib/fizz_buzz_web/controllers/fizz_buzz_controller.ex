@@ -18,4 +18,13 @@ defmodule FizzBuzzWeb.FizzBuzzController do
       _ -> json(conn, "Error occurred")
     end
   end
+
+  def create(conn, %{"number" => number_string}) do
+    with {number, ""} <- Integer.parse(number_string),
+         {:ok, _res} <- FavouriteNumbers.upsert_favourite_number(number) do
+      json(conn, :ok)
+    else
+      _ -> json(conn, "Error occurred")
+    end
+  end
 end
