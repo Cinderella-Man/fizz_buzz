@@ -38,7 +38,26 @@ $( document ).ready(function() {
           .attr("href",result.previous_page)
           .show();
       }
-      result.data.map(row => $("#fizzbuzz").append(`<li>${row.value} -> ${row.result}</li>`))
+      result.data.map(row => {
+        let favourite_link = '';
+        if (row.favourite) {
+          favourite_link = ` - Favourite number`
+        } else {
+          favourite_link = `<a href="#" data-number="${row.value}" class="favourite_links">Like!</a>`
+        }
+
+        $("#fizzbuzz").append(
+        `<li>${row.value} -> ${row.result}` + favourite_link + `</li>`
+        )
+      })
+
+      $(".favourite_links").on("click", e => {
+        e.stopPropagation();
+        const number = $(e.target).data("number");
+        $.post("api/fizz-buzz", {number}, function( data ) {
+          $(e.target).replaceWith(" - Favourite number")
+        });
+      })
     })
 });
 </script>
