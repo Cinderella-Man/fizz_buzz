@@ -20,7 +20,7 @@ defmodule FizzBuzzWeb.Pagination do
 
     %{
       data: data,
-      page: page,
+      page: page + 1,
       page_size: limit
     }
     |> Map.merge(
