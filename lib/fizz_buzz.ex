@@ -33,12 +33,12 @@ defmodule FizzBuzz do
     end
   end
 
-  @spec generate_fizz_buzz(integer(), integer()) :: {:ok, [String.t()]} | {:error, :out_of_range}
-  def range_with_favourites(from, to) when is_integer(from) and is_integer(to) do
+  @spec range_with_favourites(%{offset: integer(), limit: integer()}) :: {:ok, [%{}]} | {:error, :out_of_range}
+  def range_with_favourites(%{offset: offset, limit: limit}) when is_integer(offset) and is_integer(limit) do
     with {:ok, data} <-
-           generate_fizz_buzz(from, to),
+           generate_fizz_buzz(offset + 1, offset + limit),
          favourite_numbers <-
-           FavouriteNumbers.fetch_range(from, to),
+           FavouriteNumbers.fetch_range(offset + 1, offset + limit),
          enriched_data <- merge_favourite_rows(data, favourite_numbers) do
       {:ok, enriched_data}
     else

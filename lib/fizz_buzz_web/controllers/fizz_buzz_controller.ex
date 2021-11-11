@@ -6,7 +6,7 @@ defmodule FizzBuzzWeb.FizzBuzzController do
   def index(conn, params) do
     with {:ok, pagination} <- Pagination.parse(params),
          {:ok, enriched_data} <-
-           FizzBuzz.range_with_favourites(pagination.offset, pagination.offset + pagination.limit),
+           FizzBuzz.range_with_favourites(pagination),
          paginated_data <- Pagination.wrap(enriched_data, pagination) do
       json(conn, paginated_data)
     else
