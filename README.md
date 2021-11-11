@@ -1,19 +1,32 @@
 # FizzBuzz
 
-To start your Phoenix server:
+FizzBuzz API application task.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+Please remember to prep before running:
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+```
+docker-compose up -d
+mix deps.get
+mix ecto.create
+mix ecto.migrate
+```
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+next it can be started by running:
 
-## Learn more
+```
+iex -S mix phx.server
+```
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+Then application can be viewed at: http://localhost:4000
+
+# REST API
+
+* listing fizz buzz numbers
+
+http://localhost:4000/api/fizz-buzz?page=2&page_size=200
+
+* setting up fizz buzz number as favourite
+
+POST http://localhost:4000/api/fizz-buzz
+Content-Type: 'application/json'
+body: JSON.stringify({number: "23"})
